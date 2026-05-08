@@ -1,23 +1,23 @@
 # ASCII-ISP
 
-**ASCII-ISP** is a performance-oriented Software Image Signal Processor (ISP) written in C++. It transforms real-time video signals into ASCII-based visual data, optimized for terminal environments through fixed-point mathematics and adaptive spatial downsampling.
+**ASCII-ISP** is an ISP-inspired C++ terminal ASCII renderer for images and video. It currently focuses on fixed-point luma conversion, terminal-aware downsampling, and ASCII quantization, with additional ISP-style preprocessing stages planned for future development.
 
 ---
 
-## ISP Pipeline Highlights
+## Current ISP-Inspired Pipeline
 
-* **Fixed-Point Luma Mapping:** Implements a high-throughput integer approximation of the **ITU-R BT.601** standard ($$Y = (29R + 150G + 77B) >> 8$$) to map BGR signals to 8-bit luminance values without floating-point overhead.
-* **Adaptive Spatial Downsampling:** Automatically probes terminal dimensions in real-time to calculate an optimal scaling factor. The engine compensates for the 2:1 height-to-width ratio of terminal characters, ensuring the video remains proportional and fits the display window perfectly.
-* **8-bit Luma Quantization:** Maps 8-bit luminance values to a custom ASCII character ramp. Characters are selected and ordered based on their perceptual density (the ratio of "ink" to whitespace) to approximate a linear grayscale gradient, ensuring high-fidelity tonal reproduction in the terminal.
-* **Zero-Allocation Frame Buffer:** Utilizes a "Write-Through" buffer strategy by pre-allocating memory and overwriting a persistent `std::string`, eliminating heap fragmentation and allocation latency during high-FPS playback.
-* **Source-Synchronous Timing:** Dynamically tracks source metadata (FPS) to maintain temporal alignment between the decoded signal and the output display.
+* **Fixed-Point Luma Mapping:** Uses an integer approximation of **ITU-R BT.601** luma conversion (`Y = (77R + 150G + 29B) >> 8`), avoiding floating-point work during per-pixel processing.
+* **Terminal-Aware Downsampling:** Computes a scale factor from the terminal dimensions and compensates for the approximate 2:1 height-to-width ratio of terminal characters so the rendered output fits the screen proportionally.
+* **8-bit Luma Quantization:** Maps luminance values to a custom ASCII character ramp chosen to approximate a grayscale gradient in a monospaced terminal.
+* **Reusable Output Buffer:** Reuses a reserved `std::string` for frame output to reduce repeated allocations during playback.
+* **FPS-Based Playback Timing:** Uses source FPS metadata to pace video frame output in the terminal.
 
 ---
 
 ## Prerequisites
 
 * **Compiler:** C++17 compatible.
-* **Library:** [OpenCV 4.x](https://opencv.org/) (Signal decoding and capture).
+* **Library:** [OpenCV 4.x](https://opencv.org/) (image/video decoding and frame access).
 * **Build System:** [CMake](https://cmake.org/) (3.15+).
 
 ---
@@ -59,7 +59,7 @@ cmake --build . --config Release
 ### Disclosures
 
 * Generative AI was utilized to implement the Win32 API console abstractions for Windows compatibility and to assist in the drafting of this technical documentation.
-* This project is intended for educational and technical demonstration purposes. All sample media remains the property of their respective creators and is used here under Public Domain and Creative Commons/Pexels guidelines.
+* This project is intended as an educational and technical demonstration. All sample media remains the property of their respective creators and is used here under Public Domain and Creative Commons/Pexels guidelines.
 
 ---
 
