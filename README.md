@@ -67,4 +67,4 @@ cmake --build . --config Release
 
 ![ASCII-ISP output](media/demo_image1.png)
 
-[Watch the video demo](media/demo_video1.mp4)
+![ASCII-ISP video demo](media/demo_video1.gif)
