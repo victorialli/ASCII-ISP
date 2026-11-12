@@ -65,7 +65,6 @@ cmake --build . --config Release
 
 ## Preview
 
-https://github.com/user-attachments/assets/d9ea5d99-86cb-4763-ad4f-781d34bb9963
+![ASCII-ISP output](media/demo_image1.png)
 
-<img width="2898" height="2027" alt="image" src="https://github.com/user-attachments/assets/70326393-f097-42a5-b1d7-cba31eb8b64d" />
-
+[Watch the video demo](media/demo_video1.mp4)
